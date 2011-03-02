@@ -1,0 +1,287 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DCC5617131F013D006F18CF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCC5616131F013D006F18CF /* Cocoa.framework */; };
+		1DCC5621131F013F006F18CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC561F131F013F006F18CF /* InfoPlist.strings */; };
+		1DCC5624131F013F006F18CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC5623131F013F006F18CF /* main.m */; };
+		1DCC5627131F013F006F18CF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC5625131F013F006F18CF /* Credits.rtf */; };
+		1DCC562A131F013F006F18CF /* Growl_Caps_NotifierAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC5629131F013F006F18CF /* Growl_Caps_NotifierAppDelegate.m */; };
+		1DCC562D131F0140006F18CF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC562B131F0140006F18CF /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1DCC5612131F013D006F18CF /* Growl Caps Notifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Growl Caps Notifier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DCC5616131F013D006F18CF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		1DCC5619131F013D006F18CF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		1DCC561A131F013D006F18CF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1DCC561B131F013D006F18CF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1DCC561E131F013F006F18CF /* Growl_Caps_Notifier-Info.plist */ = {isa = PBXFileReference; path = "Growl_Caps_Notifier-Info.plist"; sourceTree = "<group>"; };
+		1DCC5620131F013F006F18CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1DCC5622131F013F006F18CF /* Growl_Caps_Notifier-Prefix.pch */ = {isa = PBXFileReference; path = "Growl_Caps_Notifier-Prefix.pch"; sourceTree = "<group>"; };
+		1DCC5623131F013F006F18CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1DCC5626131F013F006F18CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		1DCC5628131F013F006F18CF /* Growl_Caps_NotifierAppDelegate.h */ = {isa = PBXFileReference; path = Growl_Caps_NotifierAppDelegate.h; sourceTree = "<group>"; };
+		1DCC5629131F013F006F18CF /* Growl_Caps_NotifierAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Growl_Caps_NotifierAppDelegate.m; sourceTree = "<group>"; };
+		1DCC562C131F0140006F18CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1DCC560F131F013D006F18CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DCC5617131F013D006F18CF /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1DCC5607131F013B006F18CF = {
+			isa = PBXGroup;
+			children = (
+				1DCC561C131F013D006F18CF /* Growl Caps Notifier */,
+				1DCC5615131F013D006F18CF /* Frameworks */,
+				1DCC5613131F013D006F18CF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1DCC5613131F013D006F18CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1DCC5612131F013D006F18CF /* Growl Caps Notifier.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1DCC5615131F013D006F18CF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DCC5616131F013D006F18CF /* Cocoa.framework */,
+				1DCC5618131F013D006F18CF /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1DCC5618131F013D006F18CF /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DCC5619131F013D006F18CF /* AppKit.framework */,
+				1DCC561A131F013D006F18CF /* CoreData.framework */,
+				1DCC561B131F013D006F18CF /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		1DCC561C131F013D006F18CF /* Growl Caps Notifier */ = {
+			isa = PBXGroup;
+			children = (
+				1DCC5628131F013F006F18CF /* Growl_Caps_NotifierAppDelegate.h */,
+				1DCC5629131F013F006F18CF /* Growl_Caps_NotifierAppDelegate.m */,
+				1DCC562B131F0140006F18CF /* MainMenu.xib */,
+				1DCC561D131F013F006F18CF /* Supporting Files */,
+			);
+			path = "Growl Caps Notifier";
+			sourceTree = "<group>";
+		};
+		1DCC561D131F013F006F18CF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1DCC561E131F013F006F18CF /* Growl_Caps_Notifier-Info.plist */,
+				1DCC561F131F013F006F18CF /* InfoPlist.strings */,
+				1DCC5622131F013F006F18CF /* Growl_Caps_Notifier-Prefix.pch */,
+				1DCC5623131F013F006F18CF /* main.m */,
+				1DCC5625131F013F006F18CF /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1DCC5611131F013D006F18CF /* Growl Caps Notifier */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DCC5630131F0140006F18CF /* Build configuration list for PBXNativeTarget "Growl Caps Notifier" */;
+			buildPhases = (
+				1DCC560E131F013D006F18CF /* Sources */,
+				1DCC560F131F013D006F18CF /* Frameworks */,
+				1DCC5610131F013D006F18CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Growl Caps Notifier";
+			productName = "Growl Caps Notifier";
+			productReference = 1DCC5612131F013D006F18CF /* Growl Caps Notifier.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1DCC5609131F013B006F18CF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = Tzikis;
+			};
+			buildConfigurationList = 1DCC560C131F013B006F18CF /* Build configuration list for PBXProject "Growl Caps Notifier" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1DCC5607131F013B006F18CF;
+			productRefGroup = 1DCC5613131F013D006F18CF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1DCC5611131F013D006F18CF /* Growl Caps Notifier */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1DCC5610131F013D006F18CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DCC5621131F013F006F18CF /* InfoPlist.strings in Resources */,
+				1DCC5627131F013F006F18CF /* Credits.rtf in Resources */,
+				1DCC562D131F0140006F18CF /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1DCC560E131F013D006F18CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DCC5624131F013F006F18CF /* main.m in Sources */,
+				1DCC562A131F013F006F18CF /* Growl_Caps_NotifierAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1DCC561F131F013F006F18CF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DCC5620131F013F006F18CF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DCC5625131F013F006F18CF /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DCC5626131F013F006F18CF /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		1DCC562B131F0140006F18CF /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DCC562C131F0140006F18CF /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DCC562E131F0140006F18CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1DCC562F131F0140006F18CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1DCC5631131F0140006F18CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Growl Caps Notifier/Growl_Caps_Notifier-Prefix.pch";
+				INFOPLIST_FILE = "Growl Caps Notifier/Growl_Caps_Notifier-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		1DCC5632131F0140006F18CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Growl Caps Notifier/Growl_Caps_Notifier-Prefix.pch";
+				INFOPLIST_FILE = "Growl Caps Notifier/Growl_Caps_Notifier-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DCC560C131F013B006F18CF /* Build configuration list for PBXProject "Growl Caps Notifier" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DCC562E131F0140006F18CF /* Debug */,
+				1DCC562F131F0140006F18CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DCC5630131F0140006F18CF /* Build configuration list for PBXNativeTarget "Growl Caps Notifier" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DCC5631131F0140006F18CF /* Debug */,
+				1DCC5632131F0140006F18CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1DCC5609131F013B006F18CF /* Project object */;
+}
