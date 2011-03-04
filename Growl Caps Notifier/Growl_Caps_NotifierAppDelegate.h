@@ -7,12 +7,31 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <ApplicationServices/ApplicationServices.h>
+#include <CoreFoundation/CoreFoundation.h>
 
-@interface Growl_Caps_NotifierAppDelegate : NSObject <NSApplicationDelegate> {
+#import <Growl/Growl.h>
+
+#include <assert.h>
+#include <errno.h>
+#include <mach/mach.h>
+#include <notify.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+@interface Growl_Caps_NotifierAppDelegate : NSObject <NSApplicationDelegate, GrowlApplicationBridgeDelegate>
+{
 @private
-	NSWindow *window;
+//	NSWindow *window;
+    IBOutlet NSMenu *statusMenu;
+    NSStatusItem * statusItem;
 }
 
-@property (assign) IBOutlet NSWindow *window;
+//@property (assign) IBOutlet NSWindow *window;
 
+-(void) listen;
+-(void) toggleUI;
 @end
