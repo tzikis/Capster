@@ -5,6 +5,7 @@
 //  Created by Vasileios Georgitzikis on 3/3/11.
 //  Copyright 2011 Tzikis. All rights reserved.
 //
+// This source code is release under the BSD License.
 
 #import <Cocoa/Cocoa.h>
 #import <ApplicationServices/ApplicationServices.h>
