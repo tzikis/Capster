@@ -15,6 +15,7 @@
 		1D79B22013204D7D001A1197 /* caps_ter.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D79B21F13204D7D001A1197 /* caps_ter.png */; };
 		1D79B23213206026001A1197 /* capster_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D79B23113206025001A1197 /* capster_mini.png */; };
 		1D79B234132062BA001A1197 /* capster.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1D79B233132062B9001A1197 /* capster.icns */; };
+		1D85923013229B710019B4BD /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D85922F13229B710019B4BD /* defaults.plist */; };
 		1DAF5F17132281050041A5EC /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DAF5F16132281050041A5EC /* Sparkle.framework */; };
 		1DAF5F19132281450041A5EC /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DAF5F16132281050041A5EC /* Sparkle.framework */; };
 		1DAF5F1B132288600041A5EC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1DAF5F1A132288600041A5EC /* dsa_pub.pem */; };
@@ -52,6 +53,7 @@
 		1D79B21F13204D7D001A1197 /* caps_ter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caps_ter.png; sourceTree = "<group>"; };
 		1D79B23113206025001A1197 /* capster_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capster_mini.png; sourceTree = "<group>"; };
 		1D79B233132062B9001A1197 /* capster.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = capster.icns; sourceTree = "<group>"; };
+		1D85922F13229B710019B4BD /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
 		1DAF5F16132281050041A5EC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		1DAF5F1A132288600041A5EC /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		1DCC5612131F013D006F18CF /* Capster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Capster.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +152,7 @@
 				1DAF5F1A132288600041A5EC /* dsa_pub.pem */,
 				1D79B233132062B9001A1197 /* capster.icns */,
 				1D79B23113206025001A1197 /* capster_mini.png */,
+				1D85922F13229B710019B4BD /* defaults.plist */,
 				1D79B21F13204D7D001A1197 /* caps_ter.png */,
 				1D79B21713203251001A1197 /* caps_off.png */,
 				1D79B21813203251001A1197 /* caps_on.png */,
@@ -224,6 +227,7 @@
 				1D79B23213206026001A1197 /* capster_mini.png in Resources */,
 				1D79B234132062BA001A1197 /* capster.icns in Resources */,
 				1DAF5F1B132288600041A5EC /* dsa_pub.pem in Resources */,
+				1D85923013229B710019B4BD /* defaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

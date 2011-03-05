@@ -80,25 +80,16 @@ CGEventRef myCallback (
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[NSThread detachNewThreadSelector:@selector(listen)
-							 toTarget:self
-						   withObject:nil];
-
-	sleep(2);
-	CGEventRef event1 = CGEventCreateKeyboardEvent (NULL,(CGKeyCode)56,true);
-	CGEventRef event2 = CGEventCreateKeyboardEvent (NULL,(CGKeyCode)56,false);
-	CGEventPost(kCGAnnotatedSessionEventTap, event1);
-	CGEventPost(kCGAnnotatedSessionEventTap, event2);
-	
+	[self listenForCapsInNewThread];
+	[self registerDefaults];
 	
 	NSString* path_mini = [[NSBundle mainBundle] pathForResource:@"capster_mini" ofType:@"png"];
-	NSImage* mini = [[NSImage alloc] initWithContentsOfFile:path_mini];
-	
-	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain]; 
-	[statusItem setMenu:statusMenu];
-	[statusItem setImage:mini];
-	[statusItem setHighlightMode:YES];
+	mini = [[NSImage alloc] initWithContentsOfFile:path_mini];
 
+	if([preferences boolForKey:@"statusMenu"])
+		[self initStatusMenu];
+
+	
 	NSString* path_ter = [[NSBundle mainBundle] pathForResource:@"caps_ter" ofType:@"png"];
 	NSData* ter = [NSData dataWithContentsOfFile:path_ter];
 	
@@ -112,6 +103,19 @@ CGEventRef myCallback (
 							   clickContext:nil];	
 }
 
+-(void) listenForCapsInNewThread
+{
+	[NSThread detachNewThreadSelector:@selector(listen)
+							 toTarget:self
+						   withObject:nil];
+	
+	sleep(2);
+	CGEventRef event1 = CGEventCreateKeyboardEvent (NULL,(CGKeyCode)56,true);
+	CGEventRef event2 = CGEventCreateKeyboardEvent (NULL,(CGKeyCode)56,false);
+	CGEventPost(kCGAnnotatedSessionEventTap, event1);
+	CGEventPost(kCGAnnotatedSessionEventTap, event2);
+
+}
 -(void) listen
 {
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -185,13 +189,38 @@ CGEventRef myCallback (
 //    return EXIT_FAILURE;
 }
 
+
+-(void) registerDefaults
+{
+	preferences = [[NSUserDefaults standardUserDefaults] retain];
+	NSString *file = [[NSBundle mainBundle]
+					  pathForResource:@"defaults" ofType:@"plist"];
+	
+	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:file];
+	[preferences registerDefaults:dict];
+}
+
 -(void) toggleUI
 {
 	
 }
 
+-(IBAction) enableStatusMenu:(id)sender
+{
+	//not used
+}
 -(IBAction) disableStatusMenu: (id)sender
 {
+	[preferences setObject:@"NO" forKey:@"statusMenu"];
+	[preferences synchronize];
 	[[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
+}
+
+-(void) initStatusMenu
+{
+	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain]; 
+	[statusItem setMenu:statusMenu];
+	[statusItem setImage:mini];
+	[statusItem setHighlightMode:YES];
 }
 @end

@@ -29,11 +29,17 @@
 //	NSWindow *window;
     IBOutlet NSMenu *statusMenu;
     NSStatusItem * statusItem;
+	NSImage* mini;
+	NSUserDefaults *preferences;
 }
 
 //@property (assign) IBOutlet NSWindow *window;
 
+- (void) registerDefaults;
+- (void) listenForCapsInNewThread;
 - (void) listen;
 - (void) toggleUI;
+- (IBAction)enableStatusMenu:(id)sender;
 - (IBAction)disableStatusMenu:(id)sender;
+- (void) initStatusMenu;
 @end
