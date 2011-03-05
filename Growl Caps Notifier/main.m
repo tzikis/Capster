@@ -1,6 +1,6 @@
 //
 //  main.m
-//  Growl Caps Notifier
+//  Capster
 //
 //  Created by Vasileios Georgitzikis on 3/3/11.
 //  Copyright 2011 Tzikis. All rights reserved.

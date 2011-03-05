@@ -1,13 +1,13 @@
 //
-//  Growl_Caps_NotifierAppDelegate.m
-//  Growl Caps Notifier
+//  CapsterAppDelegate.m
+//  Capster
 //
 //  Created by Vasileios Georgitzikis on 3/3/11.
 //  Copyright 2011 Tzikis. All rights reserved.
 //
 // This source code is release under the BSD License.
 
-#import "Growl_Caps_NotifierAppDelegate.h"
+#import "CapsterAppDelegate.h"
 
 CGEventRef myCallback (
 					   CGEventTapProxy proxy,
