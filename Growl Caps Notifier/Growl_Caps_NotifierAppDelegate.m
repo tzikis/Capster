@@ -80,20 +80,6 @@ CGEventRef myCallback (
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	
-	
-//	NSBundle *myBundle = [NSBundle bundleForClass:[MyMainClass class]];
-//	NSString *growlPath = [[myBundle privateFrameworksPath] stringByAppendingPathComponent:@"Growl.framework"];
-////	NSBundle *growlBundle = [NSBundle bundleWithPath:growlPath];
-//	if (growlBundle && [growlBundle load])
-//	{ 
-//		// Register ourselves as a Growl delegate 
-//	}
-//	else
-//	{
-//		NSLog(@"Could not load Growl.framework");
-//	}
-		
 	[NSThread detachNewThreadSelector:@selector(listen)
 							 toTarget:self
 						   withObject:nil];
@@ -151,8 +137,7 @@ CGEventRef myCallback (
 	offset+=(int) sizeof(NSUInteger);
 //	printf("offset: %d\n", offset);
 	
-	tmpChar= byteData + offset;
-	NSUInteger* tempInt1 = (NSUInteger*) tmpChar;
+	NSUInteger* tempInt1 = (NSUInteger*) (byteData + offset);
 	*tempInt1 = len_on;
 //	NSLog(@"len_on: %i", *tempInt1);
 	offset+=(int) sizeof(NSUInteger);
@@ -172,7 +157,7 @@ CGEventRef myCallback (
 //	offset+= len_off;
 	
 //	NSLog(@"len_on: %i len_off %i", *tempInt1, *tempInt2);
-	
+	NSLog(@"size of my object: %lu", sizeof(self));
 	
 #ifndef __clang_analyzer__
 	CFMachPortRef bla = CGEventTapCreate (
@@ -203,5 +188,10 @@ CGEventRef myCallback (
 -(void) toggleUI
 {
 	
+}
+
+-(IBAction) disableStatusMenu: (id)sender
+{
+	[[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
 }
 @end

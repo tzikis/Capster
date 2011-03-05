@@ -33,6 +33,7 @@
 
 //@property (assign) IBOutlet NSWindow *window;
 
--(void) listen;
--(void) toggleUI;
+- (void) listen;
+- (void) toggleUI;
+- (IBAction)disableStatusMenu:(id)sender;
 @end
