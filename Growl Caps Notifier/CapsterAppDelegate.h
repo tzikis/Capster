@@ -26,18 +26,25 @@
 @interface Growl_Caps_NotifierAppDelegate : NSObject <NSApplicationDelegate, GrowlApplicationBridgeDelegate>
 {
 @private
-//	NSWindow *window;
+	//Preferences Panel outlet
 	IBOutlet NSPanel *preferencePanel;
+	//the menu shown when the menu icon is pressed
     IBOutlet NSMenu *statusMenu;
+	//the status item is actually the 'menu icon'
     NSStatusItem * statusItem;
+	//the mini image used as an icon for the status item
 	NSImage* mini;
+	//the user's preferences, loaded at startup
 	NSUserDefaults *preferences;
+	//The following are outlets in the preferences panel.
+	//the outlets are needed to change their text color to white
 	IBOutlet NSButton *statusCheckbox;
 	IBOutlet NSMatrix *shortcutMatrix;
+	//this points to an integer, which contains a value representing the
+	//shortcut for the preference panel
 	NSInteger *shortcut;
 }
 
-//@property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSPanel *preferencePanel;
 
 - (void) registerDefaults;
@@ -50,4 +57,5 @@
 - (IBAction)disableStatusMenu:(id)sender;
 - (IBAction)setKeyBinding:(id)sender;
 - (void) initStatusMenu;
+- (void) sendStartupGrowlNotification;
 @end
