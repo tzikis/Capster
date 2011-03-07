@@ -27,19 +27,27 @@
 {
 @private
 //	NSWindow *window;
+	IBOutlet NSPanel *preferencePanel;
     IBOutlet NSMenu *statusMenu;
     NSStatusItem * statusItem;
 	NSImage* mini;
 	NSUserDefaults *preferences;
+	IBOutlet NSButton *statusCheckbox;
+	IBOutlet NSMatrix *shortcutMatrix;
+	NSInteger *shortcut;
 }
 
 //@property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet NSPanel *preferencePanel;
 
 - (void) registerDefaults;
+-(void) makeEverythingWhite;
 - (void) listenForCapsInNewThread;
 - (void) listen;
 - (void) toggleUI;
+- (IBAction) setStatusMenuTo:(id) sender;
 - (IBAction)enableStatusMenu:(id)sender;
 - (IBAction)disableStatusMenu:(id)sender;
+- (IBAction)setKeyBinding:(id)sender;
 - (void) initStatusMenu;
 @end

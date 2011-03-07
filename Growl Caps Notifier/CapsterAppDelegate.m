@@ -31,6 +31,7 @@ CGEventRef myCallback (
 	{
 		NSString* descriptions[] = {@"Caps Lock OFF", @"Caps Lock ON"};
 		NSString* names[] = {@"caps off", @"caps on"};
+		CGEventFlags shortcuts[] = {kCGEventFlagMaskCommand , kCGEventFlagMaskShift};
 		NSData* data[2];
 		
 		int offset = sizeof(NSUInteger);
@@ -50,8 +51,16 @@ CGEventRef myCallback (
 		data[1] = [NSData dataWithBytes:(buffer+offset) length:len_on];
 		offset += (int) len_on;
 		data[0] = [NSData dataWithBytes:(buffer+offset) length:len_off];
+		offset += (int) len_off;
 
-		printf("caps %d\n",(int) *currentState);
+		id* tmpID2 = (id*) (buffer+offset);
+		id tmpID = *tmpID2;
+		offset += (int) sizeof(id*);
+		
+		NSInteger** tempInt = (NSInteger**) (buffer+offset);
+		NSInteger shortcut = **tempInt;
+
+//		printf("caps %d\n",(int) *currentState);
 		[GrowlApplicationBridge notifyWithTitle: @"Capster"
 									description: descriptions[*currentState]
 							   notificationName: names[*currentState]
@@ -59,15 +68,15 @@ CGEventRef myCallback (
 									   priority: 0
 									   isSticky: NO
 								   clickContext:nil];
-//		if ((flags & kCGEventFlagMaskShift) != 0)
-//		{
+		if ((flags & shortcuts[shortcut]) != 0)
+		{
 //			printf("enter setup\n");
 //			NSApplication* app = [NSApplication sharedApplication];
-//			[self performSelectorOnMainThread:@selector(toggleUI) 
-//								  withObject:nil 
-//							   waitUntilDone:FALSE];
+			[tmpID performSelectorOnMainThread:@selector(toggleUI) 
+								  withObject:nil 
+							   waitUntilDone:FALSE];
 //			[[NSThread mainThread] performSelector:@selector(toggleUI)];
-//		}
+		}
 	}
 	
 //		printf("flag changed\n");
@@ -77,21 +86,24 @@ CGEventRef myCallback (
 @implementation Growl_Caps_NotifierAppDelegate
 
 //@synthesize window;
+@synthesize preferencePanel;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[self listenForCapsInNewThread];
 	[self registerDefaults];
 	
-	NSString* path_mini = [[NSBundle mainBundle] pathForResource:@"capster_mini" ofType:@"png"];
-	mini = [[NSImage alloc] initWithContentsOfFile:path_mini];
+	shortcut = malloc(sizeof(NSInteger*));	
+	*shortcut = [preferences integerForKey:@"shortcut"];
 
+	[self listenForCapsInNewThread];
+	[self makeEverythingWhite];
+	
 	if([preferences boolForKey:@"statusMenu"])
 		[self initStatusMenu];
-
 	
 	NSString* path_ter = [[NSBundle mainBundle] pathForResource:@"caps_ter" ofType:@"png"];
 	NSData* ter = [NSData dataWithContentsOfFile:path_ter];
+	
 	
 	[GrowlApplicationBridge setGrowlDelegate:self];
 	[GrowlApplicationBridge notifyWithTitle: @"Capster"
@@ -130,7 +142,9 @@ CGEventRef myCallback (
 	NSUInteger len_off = [off length];
 //	NSLog(@"len_on: %i len_off %i", len_on, len_off);
 	
-	int size = (int) len_on+ (int) len_off + (3 * (int) sizeof(NSUInteger));
+	int size = (int) len_on+ (int) len_off +\
+	(3 * (int) sizeof(NSUInteger)) + (int) sizeof(id)+\
+	(int) sizeof(NSInteger*);
 	char *byteData = (char*)malloc(sizeof(char) * size);
 	
 	int offset = 0;
@@ -158,7 +172,14 @@ CGEventRef myCallback (
 	offset+=(int) len_on;
 	
 	memcpy(byteData+offset, [off bytes], len_off);
-//	offset+= len_off;
+	offset+=(int) len_off;
+	
+	id* tmpID2 = (id*) (byteData+offset);
+	*tmpID2 = (id) self;
+	offset+=(int) sizeof(id*);
+	
+	NSInteger** tempInt = (NSInteger**) (byteData+offset);
+	*tempInt = shortcut;
 	
 //	NSLog(@"len_on: %i len_off %i", *tempInt1, *tempInt2);
 	NSLog(@"size of my object: %lu", sizeof(self));
@@ -200,9 +221,54 @@ CGEventRef myCallback (
 	[preferences registerDefaults:dict];
 }
 
+-(void) makeEverythingWhite
+{
+	NSString* path_mini = [[NSBundle mainBundle] pathForResource:@"capster_mini" ofType:@"png"];
+	mini = [[NSImage alloc] initWithContentsOfFile:path_mini];
+	
+	
+	[shortcutMatrix selectCellAtRow:*shortcut column:0];
+	NSArray * cells = [shortcutMatrix cells];
+	
+	for(int i = 0 ; i < [cells count] ; i ++)
+	{
+		NSButtonCell* cell = [cells objectAtIndex:i];
+		NSMutableAttributedString *cellTitle = [[NSMutableAttributedString alloc] initWithString:[cell title]];
+		[cellTitle addAttribute:NSForegroundColorAttributeName
+						  value:[NSColor whiteColor]
+						  range:NSMakeRange(0, [[cell title] length])];
+		
+		[cell setAttributedTitle: cellTitle];
+		
+	}
+	
+	NSMutableAttributedString *checkboxTitle = [[NSMutableAttributedString alloc] initWithString:[statusCheckbox title]];
+	[checkboxTitle addAttribute:NSForegroundColorAttributeName
+						  value:[NSColor whiteColor]
+						  range:NSMakeRange(0, [checkboxTitle length])];
+	
+	[statusCheckbox setAttributedTitle: checkboxTitle];
+}
+
 -(void) toggleUI
 {
-	
+//	NSLog(@"UI Toggled");
+	static BOOL isVisible = YES;
+	[preferencePanel setIsVisible:isVisible];
+	isVisible = !isVisible;
+}
+
+-(IBAction) setStatusMenuTo:(id) sender
+{
+	sender = (NSButton*) sender;
+	if([sender state] == NSOnState)
+	{
+		[self initStatusMenu];
+	}
+	else
+	{
+		[self disableStatusMenu:nil];
+	}
 }
 
 -(IBAction) enableStatusMenu:(id)sender
@@ -216,8 +282,26 @@ CGEventRef myCallback (
 	[[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
 }
 
+- (IBAction)setKeyBinding:(id)sender
+{
+	sender =(NSMatrix*) sender;
+	if([sender selectedRow] == 0)
+	{
+//		NSLog(@"first");
+	}
+	else
+	{
+//		NSLog(@"second");		
+	}
+	*shortcut= [sender selectedRow];
+	[preferences setInteger:[sender selectedRow] forKey:@"shortcut"];
+	[preferences synchronize];
+}
+
 -(void) initStatusMenu
 {
+	[preferences setObject:@"YES" forKey:@"statusMenu"];
+	[preferences synchronize];
 	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain]; 
 	[statusItem setMenu:statusMenu];
 	[statusItem setImage:mini];

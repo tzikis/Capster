@@ -4,5 +4,7 @@
 <dict>
 	<key>statusMenu</key>
 	<true/>
+	<key>shortcut</key>
+	<integer>1</integer>
 </dict>
 </plist>
