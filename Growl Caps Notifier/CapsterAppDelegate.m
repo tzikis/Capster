@@ -323,6 +323,7 @@ CGEventRef myCallback (
 //	NSLog(@"UI Toggled");
 	static BOOL isVisible = YES;
 	[preferencePanel setIsVisible:isVisible];
+	[preferencePanel center];
 	isVisible = !isVisible;
 }
 
