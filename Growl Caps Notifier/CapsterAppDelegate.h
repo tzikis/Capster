@@ -48,7 +48,8 @@
 @property (assign) IBOutlet NSPanel *preferencePanel;
 
 - (void) registerDefaults;
--(void) makeEverythingWhite;
+- (void) makeEverythingWhite;
+- (void)setButtonTitleFor:(id)button toString:(NSString*)title withColor:(NSColor*)color ;
 - (void) listenForCapsInNewThread;
 - (void) listen;
 - (void) toggleUI;

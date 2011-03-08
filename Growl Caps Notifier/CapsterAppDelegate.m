@@ -294,24 +294,27 @@ CGEventRef myCallback (
 	{
 		//create a reference to the cell 
 		NSButtonCell* cell = [cells objectAtIndex:i];
-		//get the title
-		NSMutableAttributedString *cellTitle = [[NSMutableAttributedString alloc] initWithString:[cell title]];
-		//set give it a white attribute
-		[cellTitle addAttribute:NSForegroundColorAttributeName
-						  value:[NSColor whiteColor]
-						  range:NSMakeRange(0, [[cell title] length])];
-		//set the cell's attributed title
-		[cell setAttributedTitle: cellTitle];
-		
+		[self setButtonTitleFor:cell
+					   toString:[cell title]
+					  withColor:[NSColor whiteColor]];
 	}
-	
-	//do the same shit for the checkbox
-	NSMutableAttributedString *checkboxTitle = [[NSMutableAttributedString alloc] initWithString:[statusCheckbox title]];
-	[checkboxTitle addAttribute:NSForegroundColorAttributeName
-						  value:[NSColor whiteColor]
-						  range:NSMakeRange(0, [checkboxTitle length])];
-	
-	[statusCheckbox setAttributedTitle: checkboxTitle];
+	[self setButtonTitleFor:statusCheckbox
+				   toString:[statusCheckbox title]
+				  withColor:[NSColor whiteColor]];
+}
+
+//Set the button's title using nsattributedtitle, which lets us change the color of a button or cell's text
+- (void)setButtonTitleFor:(id)button toString:(NSString*)title withColor:(NSColor*)color 
+{
+	NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+	[style setAlignment:NSCenterTextAlignment];
+	NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+									 color, NSForegroundColorAttributeName, style, NSParagraphStyleAttributeName, nil];
+	NSAttributedString *attrString = [[NSAttributedString alloc]
+									  initWithString:title attributes:attrsDictionary];
+	[button setAttributedTitle:attrString];
+	[style release];
+	[attrString release];		
 }
 
 //toggle the preference panel between visible and invisible
