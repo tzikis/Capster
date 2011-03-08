@@ -306,6 +306,8 @@ CGEventRef myCallback (
 //Set the button's title using nsattributedtitle, which lets us change the color of a button or cell's text
 - (void)setButtonTitleFor:(id)button toString:(NSString*)title withColor:(NSColor*)color 
 {
+	if([button respondsToSelector:@selector(setAttributedTitle:)] == NO) return;
+	
 	NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
 	[style setAlignment:NSCenterTextAlignment];
 	NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
