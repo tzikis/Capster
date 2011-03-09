@@ -38,11 +38,12 @@
 	NSUserDefaults *preferences;
 	//The following are outlets in the preferences panel.
 	//the outlets are needed to change their text color to white
-	IBOutlet NSButton *statusCheckbox;
+	IBOutlet NSMatrix *statusbarMatrix;
 	IBOutlet NSMatrix *shortcutMatrix;
 	//this points to an integer, which contains a value representing the
 	//shortcut for the preference panel
 	NSInteger *shortcut;
+	NSInteger *statusbar;
 }
 
 @property (assign) IBOutlet NSPanel *preferencePanel;
@@ -57,6 +58,6 @@
 - (IBAction)enableStatusMenu:(id)sender;
 - (IBAction)disableStatusMenu:(id)sender;
 - (IBAction)setKeyBinding:(id)sender;
-- (void) initStatusMenu;
+- (void) initStatusMenu:(NSImage*) menuIcon;
 - (void) sendStartupGrowlNotification;
 @end

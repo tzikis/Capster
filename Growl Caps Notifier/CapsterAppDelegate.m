@@ -139,11 +139,20 @@ CGEventRef myCallback (
 	//make everything in the preferences white. necessary for the text to be viewable
 	[self makeEverythingWhite];
 	
+	statusbar = malloc(sizeof(NSInteger*));	
+	*statusbar = [preferences integerForKey:@"statusMenu"];
+	
+	//select the apropriate radio button, based on which shortcut is active
+	[statusbarMatrix selectCellAtRow:*statusbar column:0];
+
+	//needed, because statusbar is supposed to always store the current value
+	//and we check wether it's changed when updating the status bar.
+	//since, at the beginning, we have 0, we save it. in the next line, we will
+	//get the correct value from the statusbarMatrix, which we've just saved
+	*statusbar = 0;
+	
 	//if the user want the menu to be shown, then do so
-	if([preferences boolForKey:@"statusMenu"])
-		[self initStatusMenu];
-	else
-		[statusCheckbox setState:NSOffState];
+	[self setStatusMenuTo:statusbarMatrix];
 	
 	//send a notification to the user to let him know we're on
 	[self sendStartupGrowlNotification];
@@ -300,9 +309,20 @@ CGEventRef myCallback (
 					   toString:[cell title]
 					  withColor:[NSColor whiteColor]];
 	}
-	[self setButtonTitleFor:statusCheckbox
-				   toString:[statusCheckbox title]
-				  withColor:[NSColor whiteColor]];
+
+	//get all the cells in the matrix
+	cells = [statusbarMatrix cells];
+	
+	//for each cell
+	for(int i = 0 ; i < [cells count] ; i ++)
+	{
+		//create a reference to the cell 
+		NSButtonCell* cell = [cells objectAtIndex:i];
+		[self setButtonTitleFor:cell
+					   toString:[cell title]
+					  withColor:[NSColor whiteColor]];
+	}
+
 }
 
 //Set the button's title using nsattributedtitle, which lets us change the color of a button or cell's text
@@ -313,7 +333,7 @@ CGEventRef myCallback (
 	NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
 	[style setAlignment:NSCenterTextAlignment];
 	NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-									 color, NSForegroundColorAttributeName, style, NSParagraphStyleAttributeName, nil];
+									 color, NSForegroundColorAttributeName, nil];
 	NSAttributedString *attrString = [[NSAttributedString alloc]
 									  initWithString:title attributes:attrsDictionary];
 	[button setAttributedTitle:attrString];
@@ -335,17 +355,41 @@ CGEventRef myCallback (
 -(IBAction) setStatusMenuTo:(id) sender
 {
 	//merely a casting
-	sender = (NSButton*) sender;
-	//if the checkbox is checked, then run initStatusMenu
-	//otherwise run disableStatusMenu
-	if([sender state] == NSOnState)
+	sender = (NSMatrix*) sender;
+	NSUInteger status = 0;
+//	static NSUInteger oldStatus = 0;
+	
+	//got message from the nsmatrix radio buttons
+	if([sender respondsToSelector:@selector(selectedRow)])
 	{
-		[self initStatusMenu];
+		status = [sender selectedRow];		
+	}
+	//we got the message from the 'hide menu' menuitem. need to update our nsmatrix
+	else
+		[statusbarMatrix selectCellAtRow:0 column:0];
+	
+	NSLog(@"selected row %i, old status %i", status, *statusbar);
+
+	//make sure we need to add or remove a menu
+	if ((*statusbar == 0 &&  status !=0) || (*statusbar != 0 && status ==0))
+		*statusbar = status;
+	else
+		return;
+	
+	//if we are adding a statusmenu, then run initStatusMenu
+	//otherwise run disableStatusMenu
+	if(status > 0)
+	{
+		[self initStatusMenu: mini];
 	}
 	else
 	{
 		[self disableStatusMenu:nil];
 	}
+	
+	//update our status bar if needed
+	[preferences setInteger:status forKey:@"statusMenu"];
+	[preferences synchronize];
 }
 
 -(IBAction) enableStatusMenu:(id)sender
@@ -355,8 +399,6 @@ CGEventRef myCallback (
 //update the user's preferences, and remove the item from the status bar
 -(IBAction) disableStatusMenu: (id)sender
 {
-	[preferences setObject:@"NO" forKey:@"statusMenu"];
-	[preferences synchronize];
 	[[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
 }
 
@@ -381,10 +423,8 @@ CGEventRef myCallback (
 
 //update the user's preferences, create a status bar item, and add it to the
 //status bar
--(void) initStatusMenu
+-(void) initStatusMenu: (NSImage*) menuIcon
 {
-	[preferences setObject:@"YES" forKey:@"statusMenu"];
-	[preferences synchronize];
 	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain]; 
 	[statusItem setMenu:statusMenu];
 	[statusItem setImage:mini];
