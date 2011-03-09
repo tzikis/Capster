@@ -11,7 +11,7 @@
 #import <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
 
-#import <Growl/Growl.h>
+#include "GrowlController.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -23,7 +23,7 @@
 #include <string.h>
 #include <unistd.h>
 
-@interface Growl_Caps_NotifierAppDelegate : NSObject <NSApplicationDelegate, GrowlApplicationBridgeDelegate>
+@interface Growl_Caps_NotifierAppDelegate : NSObject <NSApplicationDelegate>
 {
 @private
 	//Preferences Panel outlet
@@ -42,8 +42,12 @@
 	IBOutlet NSMatrix *shortcutMatrix;
 	//this points to an integer, which contains a value representing the
 	//shortcut for the preference panel
-	NSInteger *shortcut;
+	NSUInteger *shortcut;
 	NSInteger *statusbar;
+	
+	NSUInteger* currentState;
+	
+	GrowlController* myController;
 }
 
 @property (assign) IBOutlet NSPanel *preferencePanel;
@@ -59,5 +63,7 @@
 - (IBAction)disableStatusMenu:(id)sender;
 - (IBAction)setKeyBinding:(id)sender;
 - (void) initStatusMenu:(NSImage*) menuIcon;
-- (void) sendStartupGrowlNotification;
+
+- (void) fetchedCapsState;
+- (void) capsLockChanged: (NSUInteger) newState;
 @end

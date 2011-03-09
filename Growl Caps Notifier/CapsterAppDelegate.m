@@ -23,7 +23,9 @@ CGEventRef myCallback (
 	//change the buffer to a char buffer
 	char *buffer = (char*) refcon;
 	//get the state, and save it for comparison
-	NSUInteger *currentState = (NSUInteger*) buffer;
+	NSUInteger** tempInt;
+	tempInt = (NSUInteger**) buffer;
+ 	NSUInteger *currentState = *tempInt;
 	NSUInteger oldState = (NSUInteger) *currentState;	
 
 	//get the flags
@@ -34,64 +36,38 @@ CGEventRef myCallback (
 	else
 		*currentState = 0;
 	
+	//increase the offset, since we've read the first NSUInteger
+	NSUInteger offset = sizeof(NSUInteger);
+	
+	//copy the object we'll be using
+	id* tmpID2 = (id*) (buffer+offset);
+	id tmpID = *tmpID2;
+	offset += (NSUInteger) sizeof(id*);
+	
+
 	//if it's our first event, then do nothing.
 	//it's the fake event we're sending to ourselves
-	if(oldState == 4) return event;
+	if(oldState == 4)
+	{
+		[tmpID performSelectorOnMainThread:@selector(fetchedCapsState) 
+								withObject:nil 
+							 waitUntilDone:YES];
+		return event;
+	}
 	
 	//if the caps lock state has changed, do some work
 	if(oldState != *currentState)
 	{
-		//prepare the stuff for the growl notification
-		NSString* descriptions[] = {@"Caps Lock OFF", @"Caps Lock ON"};
-		NSString* names[] = {@"caps off", @"caps on"};
-		NSData* data[2];
-		
 		//if the shortcut var is 0, the preference panel shortcut is cmd-caps
 		//if it's 1, then it's shift-caps
 		CGEventFlags shortcuts[] = {kCGEventFlagMaskCommand , kCGEventFlagMaskShift};
 
-		//increase the offset, since we've read the first NSUInteger
-		int offset = sizeof(NSUInteger);
-		char* tmpChar;
-		
-		//copy the length of the first image
-		tmpChar = buffer + offset;
-		NSUInteger* tempInt1 = (NSUInteger*) tmpChar;
-		NSUInteger len_on = *tempInt1;
-		offset +=(int) sizeof(NSUInteger);
-		
-		//copy the length of the second image
-		tmpChar = buffer + offset;
-		NSUInteger* tempInt2 = (NSUInteger*) tmpChar;
-		NSUInteger len_off = *tempInt2;
-		offset +=(int) sizeof(NSUInteger);
-		
-		//copy the images themselves
-//		NSLog(@"len_on: %i len_off %i", len_on, len_off);
-		data[1] = [NSData dataWithBytes:(buffer+offset) length:len_on];
-		offset += (int) len_on;
-		data[0] = [NSData dataWithBytes:(buffer+offset) length:len_off];
-		offset += (int) len_off;
-
-		//copy the object we'll be using
-		id* tmpID2 = (id*) (buffer+offset);
-		id tmpID = *tmpID2;
-		offset += (int) sizeof(id*);
-		
 		//copy the pointer to the shortcut variable too
-		NSInteger** tempInt = (NSInteger**) (buffer+offset);
-		NSInteger shortcut = **tempInt;
+		tempInt = (NSUInteger**) (buffer+offset);
+		NSUInteger shortcut = **tempInt;
 
 //		printf("caps %d\n",(int) *currentState);
-		//send the apropriate growl notification
-		[GrowlApplicationBridge notifyWithTitle: @"Capster"
-									description: descriptions[*currentState]
-							   notificationName: names[*currentState]
-									   iconData: data[*currentState]
-									   priority: 0
-									   isSticky: NO
-								   clickContext:nil
-									 identifier:@"status changed"];
+		[tmpID capsLockChanged: (NSUInteger) *currentState];
 		
 		//check if the user has pressed the key combination we're looking for.
 		//if so, toggle the preference panel, on the main thread
@@ -120,9 +96,11 @@ CGEventRef myCallback (
 	//register the user's preferences
 	[self registerDefaults];
 	
+	myController = [[GrowlController alloc] init];
+	
 	//set the shortcut pointer, so that we now what shortcut to consider
 	//valid for showing the preference panel
-	shortcut = malloc(sizeof(NSInteger*));	
+	shortcut = malloc(sizeof(NSUInteger*));	
 	*shortcut = [preferences integerForKey:@"shortcut"];
 
 	//this makes a new thread, and makes it block listening for a
@@ -155,7 +133,7 @@ CGEventRef myCallback (
 	[self setStatusMenuTo:statusbarMatrix];
 	
 	//send a notification to the user to let him know we're on
-	[self sendStartupGrowlNotification];
+	[myController sendStartupGrowlNotification];
 }
 
 //This function takes care of listening creating the new thread and setting the listener
@@ -182,69 +160,42 @@ CGEventRef myCallback (
 {
 	//the new thread needs to have its own autorelease pool
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-	
-	//Initialize the images for capslock on and off
-	NSString* path_on = [[NSBundle mainBundle] pathForResource:@"caps_on" ofType:@"png"];
-	NSString* path_off = [[NSBundle mainBundle] pathForResource:@"caps_off" ofType:@"png"];
-	NSData* on = [NSData dataWithContentsOfFile:path_on];
-	NSData* off = [NSData dataWithContentsOfFile:path_off];
-	
+		
 	//We hold the length of each image because we need to send it to the callback, in order
 	//to know its size, and reconstruct the NSData from the buffer
-	NSUInteger len_on = [on length];
-	NSUInteger len_off = [off length];
+//	NSUInteger len_on = [on length];
+//	NSUInteger len_off = [off length];
 //	NSLog(@"len_on: %i len_off %i", len_on, len_off);
 	
 	//calculate the size of the buffer
-	int size = (int) len_on+ (int) len_off +\
-	(3 * (int) sizeof(NSUInteger)) + (int) sizeof(id)+\
-	(int) sizeof(NSInteger*);
+	int size = (int) sizeof(NSUInteger*) + (int) sizeof(id) + (int) sizeof(NSUInteger*);
 	//allocate the buffer
 	char *byteData = (char*)malloc(sizeof(char) * size);
 	
 	//offset is the offset, tmpChar is a temporary variable
-	int offset = 0;
-	char *tmpChar;
+	NSUInteger offset = 0;
+	NSUInteger** tempInt;
 	
 	//The state is 0 if Caps Lock is not pressed, and 1 when pressed. However,
 	//we initialize it as 4 because we don't know the state on startup. After
 	//the first event, we'll know. Then we copy the state to the buffer
-	NSUInteger currentState = 4;
-	byteData[offset] = currentState;
-	offset+=(int) sizeof(NSUInteger);
-//	printf("offset: %d\n", offset);
-	
-	//We also copy the length of the first image to the buffer
-	NSUInteger* tempInt1 = (NSUInteger*) (byteData + offset);
-	*tempInt1 = len_on;
-//	NSLog(@"len_on: %i", *tempInt1);
-	offset+=(int) sizeof(NSUInteger);
-//	printf("offset: %d\n", offset);
-	
-	//And the second one
-	tmpChar = byteData + offset;
-	NSUInteger* tempInt2 = (NSUInteger*) tmpChar;
-	*tempInt2 = len_off;
-//	NSLog(@"len_off: %i", *tempInt2);
-	offset+=(int) sizeof(NSUInteger);
+	currentState = malloc(sizeof(NSUInteger*));
+	*currentState = 4;
+	tempInt = (NSUInteger**) byteData;
+	*tempInt = currentState;
+
+//	byteData[offset] = currentState;
+	offset+=(NSUInteger) sizeof(NSUInteger*);
 //	printf("offset: %d\n", offset);
 		
-	//we then copy the bytes of the first image to the buffer
-	memcpy(byteData+offset, [on bytes], len_on);
-	offset+=(int) len_on;
-	
-	//and the second one's too
-	memcpy(byteData+offset, [off bytes], len_off);
-	offset+=(int) len_off;
-	
 	//then, we save a pointer to ourselves, since we'll need to call
 	//one of our methods to show or hide the preference panel
 	id* tmpID2 = (id*) (byteData+offset);
 	*tmpID2 = (id) self;
-	offset+=(int) sizeof(id*);
+	offset+=(NSUInteger) sizeof(id*);
 	
 	//we also send the pointer to the shortcut key's enum
-	NSInteger** tempInt = (NSInteger**) (byteData+offset);
+	tempInt = (NSUInteger**) (byteData+offset);
 	*tempInt = shortcut;
 	
 //	NSLog(@"len_on: %i len_off %i", *tempInt1, *tempInt2);
@@ -431,21 +382,27 @@ CGEventRef myCallback (
 	[statusItem setHighlightMode:YES];
 }
 
-//let the user know we're live
-- (void) sendStartupGrowlNotification
+- (void) fetchedCapsState
 {
-	//initialize the image needed for the growl notification
-	NSString* path_ter = [[NSBundle mainBundle] pathForResource:@"caps_ter" ofType:@"png"];
-	NSData* ter = [NSData dataWithContentsOfFile:path_ter];
+	if( *currentState == 0)
+	{
+		NSLog(@"caps is off");
+	}
+	else
+	{
+		NSLog(@"caps is on");		
+	}
 	
-	
-	[GrowlApplicationBridge setGrowlDelegate:self];
-	[GrowlApplicationBridge notifyWithTitle: @"Capster"
-								description: @"Starting"
-						   notificationName: @"starting"
-								   iconData: ter
-								   priority: 0
-								   isSticky: NO
-							   clickContext:nil];	
+	if(*statusbar != 0)
+	{
+		NSString* path_mini_green = [[NSBundle mainBundle] pathForResource:@"capster_mini_green" ofType:@"png"];
+		NSImage* mini_green = [[NSImage alloc] initWithContentsOfFile:path_mini_green];
+		[statusItem setImage:mini_green];
+	}
+}
+
+- (void) capsLockChanged: (NSUInteger) newState
+{
+	[myController sendCapsLockNotification:newState];
 }
 @end
