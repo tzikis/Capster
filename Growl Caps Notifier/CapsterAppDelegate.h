@@ -12,6 +12,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 #include "GrowlController.h"
+#include "StatusbarController.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -28,12 +29,6 @@
 @private
 	//Preferences Panel outlet
 	IBOutlet NSPanel *preferencePanel;
-	//the menu shown when the menu icon is pressed
-    IBOutlet NSMenu *statusMenu;
-	//the status item is actually the 'menu icon'
-    NSStatusItem * statusItem;
-	//the mini image used as an icon for the status item
-	NSImage* mini;
 	//the user's preferences, loaded at startup
 	NSUserDefaults *preferences;
 	//The following are outlets in the preferences panel.
@@ -43,11 +38,12 @@
 	//this points to an integer, which contains a value representing the
 	//shortcut for the preference panel
 	NSUInteger *shortcut;
-	NSInteger *statusbar;
+	NSUInteger *statusbar;
 	
 	NSUInteger* currentState;
 	
 	GrowlController* myGrowlController;
+	StatusbarController *myStatusbarController;
 }
 
 @property (assign) IBOutlet NSPanel *preferencePanel;
@@ -58,11 +54,10 @@
 - (void) listenForCapsInNewThread;
 - (void) listen;
 - (void) toggleUI;
-- (IBAction) setStatusMenuTo:(id) sender;
-- (IBAction)enableStatusMenu:(id)sender;
-- (IBAction)disableStatusMenu:(id)sender;
 - (IBAction)setKeyBinding:(id)sender;
-- (void) initStatusMenu:(NSImage*) menuIcon;
+
+//set the status menu to the value of the checkbox sender
+-(IBAction) setStatusMenuTo:(id) sender;
 
 - (void) fetchedCapsState;
 - (void) capsLockChanged: (NSUInteger) newState;

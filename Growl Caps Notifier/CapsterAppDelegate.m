@@ -95,9 +95,7 @@ CGEventRef myCallback (
 {
 	//register the user's preferences
 	[self registerDefaults];
-	
-	myGrowlController = [[GrowlController alloc] init];
-	
+		
 	//set the shortcut pointer, so that we now what shortcut to consider
 	//valid for showing the preference panel
 	shortcut = malloc(sizeof(NSUInteger*));	
@@ -107,30 +105,32 @@ CGEventRef myCallback (
 	//change of state in the caps lock flag
 	[self listenForCapsInNewThread];
 
-	//initialize the mini icon image
-	NSString* path_mini = [[NSBundle mainBundle] pathForResource:@"capster_mini" ofType:@"png"];
-	mini = [[NSImage alloc] initWithContentsOfFile:path_mini];
-
 	//select the apropriate radio button, based on which shortcut is active
 	[shortcutMatrix selectCellAtRow:*shortcut column:0];
 
-	//make everything in the preferences white. necessary for the text to be viewable
-	[self makeEverythingWhite];
-	
 	statusbar = malloc(sizeof(NSInteger*));	
 	*statusbar = [preferences integerForKey:@"statusMenu"];
 	
 	//select the apropriate radio button, based on which shortcut is active
 	[statusbarMatrix selectCellAtRow:*statusbar column:0];
-
+	
 	//needed, because statusbar is supposed to always store the current value
 	//and we check wether it's changed when updating the status bar.
 	//since, at the beginning, we have 0, we save it. in the next line, we will
 	//get the correct value from the statusbarMatrix, which we've just saved
 	*statusbar = 0;
+
+	myGrowlController = [[GrowlController alloc] init];
+	myStatusbarController = [[StatusbarController alloc] initWithStatusbar:statusbar 
+														   statusbarMatrix:statusbarMatrix 
+															   preferences:preferences
+																  andState:currentState];
+
+	//make everything in the preferences white. necessary for the text to be viewable
+	[self makeEverythingWhite];
 	
 	//if the user want the menu to be shown, then do so
-	[self setStatusMenuTo:statusbarMatrix];
+	[myStatusbarController setStatusMenuTo:statusbarMatrix];
 	
 	//send a notification to the user to let him know we're on
 	[myGrowlController sendStartupGrowlNotification];
@@ -199,7 +199,7 @@ CGEventRef myCallback (
 	*tempInt = shortcut;
 	
 //	NSLog(@"len_on: %i len_off %i", *tempInt1, *tempInt2);
-	NSLog(@"size of my object: %lu", sizeof(self));
+//	NSLog(@"size of my object: %lu", sizeof(self));
 	
 	//this produces invalid warnings for the analyzer, so we silence them
 #ifndef __clang_analyzer__
@@ -302,68 +302,17 @@ CGEventRef myCallback (
 	isVisible = !isVisible;
 }
 
-//set the status menu to the value of the checkbox sender
--(IBAction) setStatusMenuTo:(id) sender
-{
-	//merely a casting
-	sender = (NSMatrix*) sender;
-	NSUInteger status = 0;
-//	static NSUInteger oldStatus = 0;
-	
-	//got message from the nsmatrix radio buttons
-	if([sender respondsToSelector:@selector(selectedRow)])
-	{
-		status = [sender selectedRow];		
-	}
-	//we got the message from the 'hide menu' menuitem. need to update our nsmatrix
-	else
-		[statusbarMatrix selectCellAtRow:0 column:0];
-	
-	NSLog(@"selected row %i, old status %i", status, *statusbar);
-
-	//make sure we need to add or remove a menu
-	if ((*statusbar == 0 &&  status !=0) || (*statusbar != 0 && status ==0))
-		*statusbar = status;
-	else
-		return;
-	
-	//if we are adding a statusmenu, then run initStatusMenu
-	//otherwise run disableStatusMenu
-	if(status > 0)
-	{
-		[self initStatusMenu: mini];
-	}
-	else
-	{
-		[self disableStatusMenu:nil];
-	}
-	
-	//update our status bar if needed
-	[preferences setInteger:status forKey:@"statusMenu"];
-	[preferences synchronize];
-}
-
--(IBAction) enableStatusMenu:(id)sender
-{
-	//not used
-}
-//update the user's preferences, and remove the item from the status bar
--(IBAction) disableStatusMenu: (id)sender
-{
-	[[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
-}
-
 //set the key binding that shows/hides the preference panel
 - (IBAction)setKeyBinding:(id)sender
 {
 	sender =(NSMatrix*) sender;
 	if([sender selectedRow] == 0)
 	{
-//		NSLog(@"first");
+		//		NSLog(@"first");
 	}
 	else
 	{
-//		NSLog(@"second");		
+		//		NSLog(@"second");		
 	}
 	//update the preferences, and the value of our pointer which shows
 	//the selected key binding
@@ -372,37 +321,29 @@ CGEventRef myCallback (
 	[preferences synchronize];
 }
 
-//update the user's preferences, create a status bar item, and add it to the
-//status bar
--(void) initStatusMenu: (NSImage*) menuIcon
-{
-	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain]; 
-	[statusItem setMenu:statusMenu];
-	[statusItem setImage:mini];
-	[statusItem setHighlightMode:YES];
-}
-
 - (void) fetchedCapsState
 {
-	if( *currentState == 0)
-	{
-		NSLog(@"caps is off");
-	}
-	else
-	{
-		NSLog(@"caps is on");		
-	}
+//	if( *currentState == 0)
+//	{
+//		NSLog(@"caps is off");
+//	}
+//	else
+//	{
+//		NSLog(@"caps is on");		
+//	}
 	
-	if(*statusbar != 0)
-	{
-		NSString* path_mini_green = [[NSBundle mainBundle] pathForResource:@"capster_mini_green" ofType:@"png"];
-		NSImage* mini_green = [[NSImage alloc] initWithContentsOfFile:path_mini_green];
-		[statusItem setImage:mini_green];
-	}
+	[myStatusbarController setIconState:(BOOL) *currentState];
 }
 
 - (void) capsLockChanged: (NSUInteger) newState
 {
 	[myGrowlController sendCapsLockNotification:newState];
+	[myStatusbarController setIconState:newState];
+}
+
+//set the status menu to the value of the checkbox sender
+-(IBAction) setStatusMenuTo:(id) sender
+{
+	[myStatusbarController setStatusMenuTo:sender];
 }
 @end
