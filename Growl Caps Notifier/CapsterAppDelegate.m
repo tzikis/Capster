@@ -90,7 +90,9 @@ CGEventRef myCallback (
 									   iconData: data[*currentState]
 									   priority: 0
 									   isSticky: NO
-								   clickContext:nil];
+								   clickContext:nil
+									 identifier:@"status changed"];
+		
 		//check if the user has pressed the key combination we're looking for.
 		//if so, toggle the preference panel, on the main thread
 		if ((flags & shortcuts[shortcut]) != 0)
