@@ -47,7 +47,7 @@
 	
 	NSUInteger* currentState;
 	
-	GrowlController* myController;
+	GrowlController* myGrowlController;
 }
 
 @property (assign) IBOutlet NSPanel *preferencePanel;

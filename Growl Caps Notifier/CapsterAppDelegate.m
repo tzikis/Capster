@@ -96,7 +96,7 @@ CGEventRef myCallback (
 	//register the user's preferences
 	[self registerDefaults];
 	
-	myController = [[GrowlController alloc] init];
+	myGrowlController = [[GrowlController alloc] init];
 	
 	//set the shortcut pointer, so that we now what shortcut to consider
 	//valid for showing the preference panel
@@ -133,7 +133,7 @@ CGEventRef myCallback (
 	[self setStatusMenuTo:statusbarMatrix];
 	
 	//send a notification to the user to let him know we're on
-	[myController sendStartupGrowlNotification];
+	[myGrowlController sendStartupGrowlNotification];
 }
 
 //This function takes care of listening creating the new thread and setting the listener
@@ -403,6 +403,6 @@ CGEventRef myCallback (
 
 - (void) capsLockChanged: (NSUInteger) newState
 {
-	[myController sendCapsLockNotification:newState];
+	[myGrowlController sendCapsLockNotification:newState];
 }
 @end
