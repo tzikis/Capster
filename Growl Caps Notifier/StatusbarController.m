@@ -12,7 +12,11 @@
 @implementation StatusbarController
 @synthesize statusItem;
 
-- (id) initWithStatusbar: (NSUInteger*) bar statusbarMatrix:(NSMatrix*) matrix preferences: (NSUserDefaults*) prefs andState:(NSUInteger *)curState
+- (id) initWithStatusbar: (NSUInteger*) bar
+		 statusbarMatrix:(NSMatrix*) matrix
+			 preferences: (NSUserDefaults*) prefs
+				   state:(NSUInteger *)curState
+			  statusMenu: (NSMenu*) menu
 {
 	self = [super init];
     if (self)
@@ -22,6 +26,7 @@
 		statusbarMatrix = matrix;
 		preferences = prefs;
 		currentState = curState;
+		statusMenu = menu;
 		
 		//initialize the mini icon image
 		NSString* path_mini = [[NSBundle mainBundle] pathForResource:@"capster_mini" ofType:@"png"];

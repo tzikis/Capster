@@ -34,6 +34,8 @@
 	//The following are outlets in the preferences panel.
 	//the outlets are needed to change their text color to white
 	IBOutlet NSMatrix *statusbarMatrix;
+	//the menu shown when the menu icon is pressed
+    IBOutlet NSMenu *statusMenu;
 	IBOutlet NSMatrix *shortcutMatrix;
 	//this points to an integer, which contains a value representing the
 	//shortcut for the preference panel

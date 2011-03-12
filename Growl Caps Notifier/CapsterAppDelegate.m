@@ -124,7 +124,8 @@ CGEventRef myCallback (
 	myStatusbarController = [[StatusbarController alloc] initWithStatusbar:statusbar 
 														   statusbarMatrix:statusbarMatrix 
 															   preferences:preferences
-																  andState:currentState];
+																	 state:currentState
+																statusMenu:statusMenu];
 
 	//make everything in the preferences white. necessary for the text to be viewable
 	[self makeEverythingWhite];

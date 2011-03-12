@@ -38,7 +38,11 @@
 
 - (void) setIconState: (BOOL) state;
 
-- (id) initWithStatusbar: (NSUInteger*) bar statusbarMatrix:(NSMatrix*) matrix preferences: (NSUserDefaults*) prefs andState: (NSUInteger*) curState;
+- (id) initWithStatusbar: (NSUInteger*) bar
+		 statusbarMatrix:(NSMatrix*) matrix
+			 preferences: (NSUserDefaults*) prefs
+				   state: (NSUInteger*) curState
+			  statusMenu: (NSMenu*) menu;
 - (IBAction) setStatusMenuTo:(id) sender;
 - (IBAction)enableStatusMenu:(id)sender;
 - (IBAction)disableStatusMenu:(id)sender;
