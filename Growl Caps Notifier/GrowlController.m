@@ -54,7 +54,7 @@
 	NSData* off = [NSData dataWithContentsOfFile:path_off];
 	
 	//prepare the stuff for the growl notification		
-	NSString* descriptions[] = {@"Caps Lock OFF", @"Caps Lock ON"};
+	NSString* descriptions[] = {@"Caps Lock off", @"Caps Lock on"};
 	NSString* names[] = {@"caps off", @"caps on"};
 	NSData* data[] = {off, on};
 	
