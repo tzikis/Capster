@@ -16,8 +16,9 @@
     IBOutlet NSMenu *statusMenu;
 	//the status item is actually the 'menu icon'
     NSStatusItem * statusItem;
-	//the mini image used as an icon for the status item
-	NSImage* mini;    
+	//the mini images used as an icon for the status item
+	NSImage* mini_on;    
+	NSImage* mini_off;    
 
 	NSImage* mini_green;
 	NSImage* mini_red;

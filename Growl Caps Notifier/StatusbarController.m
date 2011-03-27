@@ -29,8 +29,12 @@
 		statusMenu = menu;
 		
 		//initialize the mini icon image
-		NSString* path_mini = [[NSBundle mainBundle] pathForResource:@"capster_mini" ofType:@"png"];
-		mini = [[NSImage alloc] initWithContentsOfFile:path_mini];
+		NSString* path_mini_on = [[NSBundle mainBundle] pathForResource:@"capster_mini" ofType:@"png"];
+		mini_on = [[NSImage alloc] initWithContentsOfFile:path_mini_on];
+		
+		NSString* path_mini_off = [[NSBundle mainBundle] pathForResource:@"capster_mini_off" ofType:@"png"];
+		mini_off = [[NSImage alloc] initWithContentsOfFile:path_mini_off];
+
 		
 		NSString* path_mini_green = [[NSBundle mainBundle] pathForResource:@"capster_mini_green" ofType:@"png"];
 		mini_green = [[NSImage alloc] initWithContentsOfFile:path_mini_green];
@@ -58,7 +62,8 @@
 //	NSLog(@"state %i and statusbar %i", state, *statusbar);
 	if(*statusbar == 1)
 	{
-		[statusItem setImage:mini];
+		if(state) [statusItem setImage:mini_on];
+		else [statusItem setImage:mini_off];
 	}
 	else if(*statusbar == 2)
 	{
@@ -101,7 +106,7 @@
 		//otherwise run disableStatusMenu
 		if(status > 0)
 		{
-			[self initStatusMenu: mini];
+			[self initStatusMenu: mini_on];
 		}
 		else
 		{
@@ -136,7 +141,7 @@
 {
 	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain]; 
 	[statusItem setMenu:statusMenu];
-	[statusItem setImage:mini];
+	[statusItem setImage:mini_on];
 	[statusItem setHighlightMode:YES];
 }
 

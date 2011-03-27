@@ -347,7 +347,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 								<object class="NSButtonCell" id="978311826">
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">0</int>
-									<string key="NSContents">Black App Icon</string>
+									<string key="NSContents">Black App Icons</string>
 									<reference key="NSSupport" ref="657371606"/>
 									<reference key="NSControlView" ref="28495295"/>
 									<int key="NSButtonFlags">1211912703</int>
@@ -452,7 +452,7 @@ QXBwbGUgQ29tcHV0ZXIsIEluYy4sIDIwMDUAAAAAA</bytes>
 								<object class="NSButtonCell" id="751909226">
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">0</int>
-									<string key="NSContents">Colored App Icon for status</string>
+									<string key="NSContents">Colored App Icons</string>
 									<reference key="NSSupport" ref="657371606"/>
 									<reference key="NSControlView" ref="28495295"/>
 									<int key="NSButtonFlags">1211912703</int>
@@ -464,7 +464,7 @@ QXBwbGUgQ29tcHV0ZXIsIEluYy4sIDIwMDUAAAAAA</bytes>
 								<object class="NSButtonCell" id="158108621">
 									<int key="NSCellFlags">67239424</int>
 									<int key="NSCellFlags2">0</int>
-									<string key="NSContents">Colored LEDs for status</string>
+									<string key="NSContents">Colored bullets</string>
 									<reference key="NSSupport" ref="657371606"/>
 									<reference key="NSControlView" ref="28495295"/>
 									<int key="NSButtonFlags">1211912703</int>
@@ -885,6 +885,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>587.IBPluginDependency</string>
 					<string>588.IBPluginDependency</string>
 					<string>589.IBPluginDependency</string>
+					<string>591.IBPluginDependency</string>
+					<string>592.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -903,6 +905,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<boolean value="NO"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="NO"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -976,12 +980,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>preferencePanel</string>
 							<string>shortcutMatrix</string>
+							<string>statusMenu</string>
 							<string>statusbarMatrix</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSPanel</string>
 							<string>NSMatrix</string>
+							<string>NSMenu</string>
 							<string>NSMatrix</string>
 						</object>
 					</object>
@@ -991,6 +997,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>preferencePanel</string>
 							<string>shortcutMatrix</string>
+							<string>statusMenu</string>
 							<string>statusbarMatrix</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -1002,6 +1009,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<object class="IBToOneOutletInfo">
 								<string key="name">shortcutMatrix</string>
 								<string key="candidateClassName">NSMatrix</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">statusMenu</string>
+								<string key="candidateClassName">NSMenu</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">statusbarMatrix</string>
