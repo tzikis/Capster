@@ -281,16 +281,15 @@ CGEventRef myCallback (
 - (void)setButtonTitleFor:(id)button toString:(NSString*)title withColor:(NSColor*)color 
 {
 	if([button respondsToSelector:@selector(setAttributedTitle:)] == NO) return;
+			
+	NSMutableDictionary *attrsDictionary = [NSMutableDictionary dictionaryWithDictionary:
+											   [[button attributedTitle] attributesAtIndex:0 effectiveRange:NULL]];
+	[attrsDictionary setObject:color forKey:NSForegroundColorAttributeName];
 	
-	NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-	[style setAlignment:NSCenterTextAlignment];
-	NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-									 color, NSForegroundColorAttributeName, nil];
-	NSMutableAttributedString *attrString = [[button attributedString] mutableCopy];
-	NSRange stringRange = NSMakeRange(0, [attrString length]);
-	[attrString addAttributes:attrsDictionary range:stringRange];
-	[button setAttributedTitle:attrString];
-	[style release];
+	NSAttributedString* attrString = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+	NSLog(@"%@", attrsDictionary);
+	
+	[button setAttributedTitle: attrString];
 	[attrString release];		
 }
 
