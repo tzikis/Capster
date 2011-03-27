@@ -286,8 +286,9 @@ CGEventRef myCallback (
 	[style setAlignment:NSCenterTextAlignment];
 	NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
 									 color, NSForegroundColorAttributeName, nil];
-	NSAttributedString *attrString = [[NSAttributedString alloc]
-									  initWithString:title attributes:attrsDictionary];
+	NSMutableAttributedString *attrString = [[button attributedString] mutableCopy];
+	NSRange stringRange = NSMakeRange(0, [attrString length]);
+	[attrString addAttributes:attrsDictionary range:stringRange];
 	[button setAttributedTitle:attrString];
 	[style release];
 	[attrString release];		
