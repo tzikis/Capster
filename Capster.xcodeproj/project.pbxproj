@@ -157,9 +157,9 @@
 				1DCC5628131F013F006F18CF /* CapsterAppDelegate.h */,
 				1DCC5629131F013F006F18CF /* CapsterAppDelegate.m */,
 				1D5D9D8F132729D200BAAA31 /* GrowlController.h */,
+				1D5D9D90132729D200BAAA31 /* GrowlController.m */,
 				1D5D9D9213272C1300BAAA31 /* StatusbarController.h */,
 				1D5D9D9313272C1300BAAA31 /* StatusbarController.m */,
-				1D5D9D90132729D200BAAA31 /* GrowlController.m */,
 				1DCC562B131F0140006F18CF /* MainMenu.xib */,
 				1DCC561D131F013F006F18CF /* Supporting Files */,
 			);
