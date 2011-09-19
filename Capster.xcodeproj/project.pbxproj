@@ -23,9 +23,6 @@
 		1D79B23213206026001A1197 /* capster_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D79B23113206025001A1197 /* capster_mini.png */; };
 		1D79B234132062BA001A1197 /* capster.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1D79B233132062B9001A1197 /* capster.icns */; };
 		1D85923013229B710019B4BD /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D85922F13229B710019B4BD /* defaults.plist */; };
-		1DAF5F17132281050041A5EC /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DAF5F16132281050041A5EC /* Sparkle.framework */; };
-		1DAF5F19132281450041A5EC /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DAF5F16132281050041A5EC /* Sparkle.framework */; };
-		1DAF5F1B132288600041A5EC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1DAF5F1A132288600041A5EC /* dsa_pub.pem */; };
 		1DCC5617131F013D006F18CF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DCC5616131F013D006F18CF /* Cocoa.framework */; };
 		1DCC5621131F013F006F18CF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DCC561F131F013F006F18CF /* InfoPlist.strings */; };
 		1DCC5624131F013F006F18CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DCC5623131F013F006F18CF /* main.m */; };
@@ -46,7 +43,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				1D635002131F482F00762055 /* Growl.framework in CopyFiles */,
-				1DAF5F19132281450041A5EC /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,8 +66,6 @@
 		1D79B23113206025001A1197 /* capster_mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = capster_mini.png; sourceTree = "<group>"; };
 		1D79B233132062B9001A1197 /* capster.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = capster.icns; sourceTree = "<group>"; };
 		1D85922F13229B710019B4BD /* defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
-		1DAF5F16132281050041A5EC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		1DAF5F1A132288600041A5EC /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		1DCC5612131F013D006F18CF /* Capster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Capster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DCC5616131F013D006F18CF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1DCC5619131F013D006F18CF /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -102,7 +96,6 @@
 				1DCC5651131F10FB006F18CF /* Carbon.framework in Frameworks */,
 				1DCC5617131F013D006F18CF /* Cocoa.framework in Frameworks */,
 				1D635003131F486400762055 /* Growl.framework in Frameworks */,
-				1DAF5F17132281050041A5EC /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +126,6 @@
 		1DCC5615131F013D006F18CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1DAF5F16132281050041A5EC /* Sparkle.framework */,
 				1DCC5616131F013D006F18CF /* Cocoa.framework */,
 				1DCC5618131F013D006F18CF /* Other Frameworks */,
 			);
@@ -171,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				1D1D90BB133FDBFF00D733C9 /* capster_mini_off.png */,
-				1DAF5F1A132288600041A5EC /* dsa_pub.pem */,
 				1D79B233132062B9001A1197 /* capster.icns */,
 				1D79B23113206025001A1197 /* capster_mini.png */,
 				1D5D9D8A1327173700BAAA31 /* capster_mini_green.png */,
@@ -252,7 +243,6 @@
 				1D79B22013204D7D001A1197 /* caps_ter.png in Resources */,
 				1D79B23213206026001A1197 /* capster_mini.png in Resources */,
 				1D79B234132062BA001A1197 /* capster.icns in Resources */,
-				1DAF5F1B132288600041A5EC /* dsa_pub.pem in Resources */,
 				1D85923013229B710019B4BD /* defaults.plist in Resources */,
 				1D5D9D8C1327173700BAAA31 /* capster_mini_green.png in Resources */,
 				1D5D9D8D1327173700BAAA31 /* capster_mini_red.png in Resources */,
